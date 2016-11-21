@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.NodeMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Node" >
+    <id column="NODE_ID" property="nodeId" jdbcType="BIGINT" />
+    <result column="TYPE" property="type" jdbcType="BIGINT" />
+    <result column="HOSTNAME" property="hostname" jdbcType="VARCHAR" />
+    <result column="COMMUNITY_RO" property="communityRo" jdbcType="VARCHAR" />
+    <result column="COMMUNITY_RW" property="communityRw" jdbcType="VARCHAR" />
+    <result column="SNMP_SYSNAME" property="snmpSysname" jdbcType="VARCHAR" />
+    <result column="SNMP_SYSDESCR" property="snmpSysdescr" jdbcType="VARCHAR" />
+    <result column="SNMP_SYSLOCATION" property="snmpSyslocation" jdbcType="VARCHAR" />
+    <result column="SNMP_SYSCONTACT" property="snmpSyscontact" jdbcType="VARCHAR" />
+    <result column="SNMP_SYSOBJID" property="snmpSysobjid" jdbcType="VARCHAR" />
+    <result column="PRODUCER_CODE" property="producerCode" jdbcType="BIGINT" />
+    <result column="IF_COUNT" property="ifCount" jdbcType="BIGINT" />
+    <result column="IP_ADDRESS" property="ipAddress" jdbcType="VARCHAR" />
+    <result column="IP_NUM" property="ipNum" jdbcType="BIGINT" />
+    <result column="SYS_UPTIME" property="sysUptime" jdbcType="DATE" />
+    <result column="ADMIN_STATUS" property="adminStatus" jdbcType="BIGINT" />
+    <result column="POLL_TIME" property="pollTime" jdbcType="DATE" />
+    <result column="BRIDGE_ADDRESS" property="bridgeAddress" jdbcType="VARCHAR" />
+    <result column="VLAN_COUNT" property="vlanCount" jdbcType="BIGINT" />
+    <result column="ALARM_LEVEL" property="alarmLevel" jdbcType="BIGINT" />
+    <result column="WATERBOX" property="waterbox" jdbcType="BIGINT" />
+    <result column="POLL_INTERVAL" property="pollInterval" jdbcType="BIGINT" />
+    <result column="ISSNMPSUPPORTED" property="issnmpsupported" jdbcType="BIGINT" />
+    <result column="ISCOMPUTER" property="iscomputer" jdbcType="BIGINT" />
+    <result column="ISROUTER" property="isrouter" jdbcType="BIGINT" />
+    <result column="ISSWITCH" property="isswitch" jdbcType="BIGINT" />
+    <result column="ISPRINTER" property="isprinter" jdbcType="BIGINT" />
+    <result column="DISPLAYNAME" property="displayname" jdbcType="VARCHAR" />
+    <result column="ICON_ID" property="iconId" jdbcType="BIGINT" />
+    <result column="SEVERITY" property="severity" jdbcType="BIGINT" />
+    <result column="IS_HANDWORK" property="isHandwork" jdbcType="BIGINT" />
+    <result column="PANEL_ID" property="panelId" jdbcType="BIGINT" />
+    <result column="SNMP_CONF" property="snmpConf" jdbcType="VARCHAR" />
+    <result column="EVENT_ID" property="eventId" jdbcType="BIGINT" />
+    <result column="SYS_LASTCONFIGSAVEDTIME" property="sysLastconfigsavedtime" jdbcType="DATE" />
+    <result column="MODIFY_FLAG" property="modifyFlag" jdbcType="VARCHAR" />
+    <result column="SEVERITY_CHANGE_TIME" property="severityChangeTime" jdbcType="DATE" />
+    <result column="SPARE_IP_ADDRESSES" property="spareIpAddresses" jdbcType="VARCHAR" />
+    <result column="TYPE2" property="type2" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    NODE_ID, `TYPE`, HOSTNAME, COMMUNITY_RO, COMMUNITY_RW, SNMP_SYSNAME, SNMP_SYSDESCR, 
+    SNMP_SYSLOCATION, SNMP_SYSCONTACT, SNMP_SYSOBJID, PRODUCER_CODE, IF_COUNT, IP_ADDRESS, 
+    IP_NUM, SYS_UPTIME, ADMIN_STATUS, POLL_TIME, BRIDGE_ADDRESS, VLAN_COUNT, ALARM_LEVEL, 
+    WATERBOX, POLL_INTERVAL, ISSNMPSUPPORTED, ISCOMPUTER, ISROUTER, ISSWITCH, ISPRINTER, 
+    DISPLAYNAME, ICON_ID, SEVERITY, IS_HANDWORK, PANEL_ID, SNMP_CONF, EVENT_ID, SYS_LASTCONFIGSAVEDTIME, 
+    MODIFY_FLAG, SEVERITY_CHANGE_TIME, SPARE_IP_ADDRESSES, TYPE2
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pojo.NodeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from node
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap" parameterType="com.pojo.NodeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from node
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pojo.NodeExample" >
+    delete from node
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.pojo.NodeExample" resultType="java.lang.Integer" >
+    select count(*) from node
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update node
+    <set >
+      <if test="record.nodeId != null" >
+        NODE_ID = #{record.nodeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.type != null" >
+        `TYPE` = #{record.type,jdbcType=BIGINT},
+      </if>
+      <if test="record.hostname != null" >
+        HOSTNAME = #{record.hostname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.communityRo != null" >
+        COMMUNITY_RO = #{record.communityRo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.communityRw != null" >
+        COMMUNITY_RW = #{record.communityRw,jdbcType=VARCHAR},
+      </if>
+      <if test="record.snmpSysname != null" >
+        SNMP_SYSNAME = #{record.snmpSysname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.snmpSysdescr != null" >
+        SNMP_SYSDESCR = #{record.snmpSysdescr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.snmpSyslocation != null" >
+        SNMP_SYSLOCATION = #{record.snmpSyslocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.snmpSyscontact != null" >
+        SNMP_SYSCONTACT = #{record.snmpSyscontact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.snmpSysobjid != null" >
+        SNMP_SYSOBJID = #{record.snmpSysobjid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.producerCode != null" >
+        PRODUCER_CODE = #{record.producerCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.ifCount != null" >
+        IF_COUNT = #{record.ifCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.ipAddress != null" >
+        IP_ADDRESS = #{record.ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ipNum != null" >
+        IP_NUM = #{record.ipNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.sysUptime != null" >
+        SYS_UPTIME = #{record.sysUptime,jdbcType=DATE},
+      </if>
+      <if test="record.adminStatus != null" >
+        ADMIN_STATUS = #{record.adminStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.pollTime != null" >
+        POLL_TIME = #{record.pollTime,jdbcType=DATE},
+      </if>
+      <if test="record.bridgeAddress != null" >
+        BRIDGE_ADDRESS = #{record.bridgeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vlanCount != null" >
+        VLAN_COUNT = #{record.vlanCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.alarmLevel != null" >
+        ALARM_LEVEL = #{record.alarmLevel,jdbcType=BIGINT},
+      </if>
+      <if test="record.waterbox != null" >
+        WATERBOX = #{record.waterbox,jdbcType=BIGINT},
+      </if>
+      <if test="record.pollInterval != null" >
+        POLL_INTERVAL = #{record.pollInterval,jdbcType=BIGINT},
+      </if>
+      <if test="record.issnmpsupported != null" >
+        ISSNMPSUPPORTED = #{record.issnmpsupported,jdbcType=BIGINT},
+      </if>
+      <if test="record.iscomputer != null" >
+        ISCOMPUTER = #{record.iscomputer,jdbcType=BIGINT},
+      </if>
+      <if test="record.isrouter != null" >
+        ISROUTER = #{record.isrouter,jdbcType=BIGINT},
+      </if>
+      <if test="record.isswitch != null" >
+        ISSWITCH = #{record.isswitch,jdbcType=BIGINT},
+      </if>
+      <if test="record.isprinter != null" >
+        ISPRINTER = #{record.isprinter,jdbcType=BIGINT},
+      </if>
+      <if test="record.displayname != null" >
+        DISPLAYNAME = #{record.displayname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iconId != null" >
+        ICON_ID = #{record.iconId,jdbcType=BIGINT},
+      </if>
+      <if test="record.severity != null" >
+        SEVERITY = #{record.severity,jdbcType=BIGINT},
+      </if>
+      <if test="record.isHandwork != null" >
+        IS_HANDWORK = #{record.isHandwork,jdbcType=BIGINT},
+      </if>
+      <if test="record.panelId != null" >
+        PANEL_ID = #{record.panelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.snmpConf != null" >
+        SNMP_CONF = #{record.snmpConf,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventId != null" >
+        EVENT_ID = #{record.eventId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sysLastconfigsavedtime != null" >
+        SYS_LASTCONFIGSAVEDTIME = #{record.sysLastconfigsavedtime,jdbcType=DATE},
+      </if>
+      <if test="record.modifyFlag != null" >
+        MODIFY_FLAG = #{record.modifyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.severityChangeTime != null" >
+        SEVERITY_CHANGE_TIME = #{record.severityChangeTime,jdbcType=DATE},
+      </if>
+      <if test="record.spareIpAddresses != null" >
+        SPARE_IP_ADDRESSES = #{record.spareIpAddresses,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type2 != null" >
+        TYPE2 = #{record.type2,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update node
+    set NODE_ID = #{record.nodeId,jdbcType=BIGINT},
+      `TYPE` = #{record.type,jdbcType=BIGINT},
+      HOSTNAME = #{record.hostname,jdbcType=VARCHAR},
+      COMMUNITY_RO = #{record.communityRo,jdbcType=VARCHAR},
+      COMMUNITY_RW = #{record.communityRw,jdbcType=VARCHAR},
+      SNMP_SYSNAME = #{record.snmpSysname,jdbcType=VARCHAR},
+      SNMP_SYSDESCR = #{record.snmpSysdescr,jdbcType=VARCHAR},
+      SNMP_SYSLOCATION = #{record.snmpSyslocation,jdbcType=VARCHAR},
+      SNMP_SYSCONTACT = #{record.snmpSyscontact,jdbcType=VARCHAR},
+      SNMP_SYSOBJID = #{record.snmpSysobjid,jdbcType=VARCHAR},
+      PRODUCER_CODE = #{record.producerCode,jdbcType=BIGINT},
+      IF_COUNT = #{record.ifCount,jdbcType=BIGINT},
+      IP_ADDRESS = #{record.ipAddress,jdbcType=VARCHAR},
+      IP_NUM = #{record.ipNum,jdbcType=BIGINT},
+      SYS_UPTIME = #{record.sysUptime,jdbcType=DATE},
+      ADMIN_STATUS = #{record.adminStatus,jdbcType=BIGINT},
+      POLL_TIME = #{record.pollTime,jdbcType=DATE},
+      BRIDGE_ADDRESS = #{record.bridgeAddress,jdbcType=VARCHAR},
+      VLAN_COUNT = #{record.vlanCount,jdbcType=BIGINT},
+      ALARM_LEVEL = #{record.alarmLevel,jdbcType=BIGINT},
+      WATERBOX = #{record.waterbox,jdbcType=BIGINT},
+      POLL_INTERVAL = #{record.pollInterval,jdbcType=BIGINT},
+      ISSNMPSUPPORTED = #{record.issnmpsupported,jdbcType=BIGINT},
+      ISCOMPUTER = #{record.iscomputer,jdbcType=BIGINT},
+      ISROUTER = #{record.isrouter,jdbcType=BIGINT},
+      ISSWITCH = #{record.isswitch,jdbcType=BIGINT},
+      ISPRINTER = #{record.isprinter,jdbcType=BIGINT},
+      DISPLAYNAME = #{record.displayname,jdbcType=VARCHAR},
+      ICON_ID = #{record.iconId,jdbcType=BIGINT},
+      SEVERITY = #{record.severity,jdbcType=BIGINT},
+      IS_HANDWORK = #{record.isHandwork,jdbcType=BIGINT},
+      PANEL_ID = #{record.panelId,jdbcType=BIGINT},
+      SNMP_CONF = #{record.snmpConf,jdbcType=VARCHAR},
+      EVENT_ID = #{record.eventId,jdbcType=BIGINT},
+      SYS_LASTCONFIGSAVEDTIME = #{record.sysLastconfigsavedtime,jdbcType=DATE},
+      MODIFY_FLAG = #{record.modifyFlag,jdbcType=VARCHAR},
+      SEVERITY_CHANGE_TIME = #{record.severityChangeTime,jdbcType=DATE},
+      SPARE_IP_ADDRESSES = #{record.spareIpAddresses,jdbcType=VARCHAR},
+      TYPE2 = #{record.type2,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from node
+    where NODE_ID = #{nodeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from node
+    where NODE_ID = #{nodeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Node" >
+    insert into node (NODE_ID, `TYPE`, HOSTNAME, 
+      COMMUNITY_RO, COMMUNITY_RW, SNMP_SYSNAME, 
+      SNMP_SYSDESCR, SNMP_SYSLOCATION, SNMP_SYSCONTACT, 
+      SNMP_SYSOBJID, PRODUCER_CODE, IF_COUNT, 
+      IP_ADDRESS, IP_NUM, SYS_UPTIME, 
+      ADMIN_STATUS, POLL_TIME, BRIDGE_ADDRESS, 
+      VLAN_COUNT, ALARM_LEVEL, WATERBOX, 
+      POLL_INTERVAL, ISSNMPSUPPORTED, ISCOMPUTER, 
+      ISROUTER, ISSWITCH, ISPRINTER, 
+      DISPLAYNAME, ICON_ID, SEVERITY, 
+      IS_HANDWORK, PANEL_ID, SNMP_CONF, 
+      EVENT_ID, SYS_LASTCONFIGSAVEDTIME, MODIFY_FLAG, 
+      SEVERITY_CHANGE_TIME, SPARE_IP_ADDRESSES, TYPE2
+      )
+    values (#{nodeId,jdbcType=BIGINT}, #{type,jdbcType=BIGINT}, #{hostname,jdbcType=VARCHAR}, 
+      #{communityRo,jdbcType=VARCHAR}, #{communityRw,jdbcType=VARCHAR}, #{snmpSysname,jdbcType=VARCHAR}, 
+      #{snmpSysdescr,jdbcType=VARCHAR}, #{snmpSyslocation,jdbcType=VARCHAR}, #{snmpSyscontact,jdbcType=VARCHAR}, 
+      #{snmpSysobjid,jdbcType=VARCHAR}, #{producerCode,jdbcType=BIGINT}, #{ifCount,jdbcType=BIGINT}, 
+      #{ipAddress,jdbcType=VARCHAR}, #{ipNum,jdbcType=BIGINT}, #{sysUptime,jdbcType=DATE}, 
+      #{adminStatus,jdbcType=BIGINT}, #{pollTime,jdbcType=DATE}, #{bridgeAddress,jdbcType=VARCHAR}, 
+      #{vlanCount,jdbcType=BIGINT}, #{alarmLevel,jdbcType=BIGINT}, #{waterbox,jdbcType=BIGINT}, 
+      #{pollInterval,jdbcType=BIGINT}, #{issnmpsupported,jdbcType=BIGINT}, #{iscomputer,jdbcType=BIGINT}, 
+      #{isrouter,jdbcType=BIGINT}, #{isswitch,jdbcType=BIGINT}, #{isprinter,jdbcType=BIGINT}, 
+      #{displayname,jdbcType=VARCHAR}, #{iconId,jdbcType=BIGINT}, #{severity,jdbcType=BIGINT}, 
+      #{isHandwork,jdbcType=BIGINT}, #{panelId,jdbcType=BIGINT}, #{snmpConf,jdbcType=VARCHAR}, 
+      #{eventId,jdbcType=BIGINT}, #{sysLastconfigsavedtime,jdbcType=DATE}, #{modifyFlag,jdbcType=VARCHAR}, 
+      #{severityChangeTime,jdbcType=DATE}, #{spareIpAddresses,jdbcType=VARCHAR}, #{type2,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Node" >
+    insert into node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      NODE_ID,
+      `TYPE`,
+      HOSTNAME,
+      COMMUNITY_RO,
+      COMMUNITY_RW,
+      SNMP_SYSNAME,
+      SNMP_SYSDESCR,
+      SNMP_SYSLOCATION,
+      SNMP_SYSCONTACT,
+      SNMP_SYSOBJID,
+      PRODUCER_CODE,
+      IF_COUNT,
+      IP_ADDRESS,
+      IP_NUM,
+      SYS_UPTIME,
+      ADMIN_STATUS,
+      POLL_TIME,
+      BRIDGE_ADDRESS,
+      VLAN_COUNT,
+      ALARM_LEVEL,
+      WATERBOX,
+      POLL_INTERVAL,
+      ISSNMPSUPPORTED,
+      ISCOMPUTER,
+      ISROUTER,
+      ISSWITCH,
+      ISPRINTER,
+      DISPLAYNAME,
+      ICON_ID,
+      SEVERITY,
+      IS_HANDWORK,
+      PANEL_ID,
+      SNMP_CONF,
+      EVENT_ID,
+      SYS_LASTCONFIGSAVEDTIME,
+      MODIFY_FLAG,
+      SEVERITY_CHANGE_TIME,
+      SPARE_IP_ADDRESSES,
+      TYPE2,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{nodeId,jdbcType=BIGINT},
+      #{type,jdbcType=BIGINT},
+      #{hostname,jdbcType=VARCHAR},
+      #{communityRo,jdbcType=VARCHAR},
+      #{communityRw,jdbcType=VARCHAR},
+      #{snmpSysname,jdbcType=VARCHAR},
+      #{snmpSysdescr,jdbcType=VARCHAR},
+      #{snmpSyslocation,jdbcType=VARCHAR},
+      #{snmpSyscontact,jdbcType=VARCHAR},
+      #{snmpSysobjid,jdbcType=VARCHAR},
+      #{producerCode,jdbcType=BIGINT},
+      #{ifCount,jdbcType=BIGINT},
+      #{ipAddress,jdbcType=VARCHAR},
+      #{ipNum,jdbcType=BIGINT},
+      #{sysUptime,jdbcType=DATE},
+      #{adminStatus,jdbcType=BIGINT},
+      #{pollTime,jdbcType=DATE},
+      #{bridgeAddress,jdbcType=VARCHAR},
+      #{vlanCount,jdbcType=BIGINT},
+      #{alarmLevel,jdbcType=BIGINT},
+      #{waterbox,jdbcType=BIGINT},
+      #{pollInterval,jdbcType=BIGINT},
+      #{issnmpsupported,jdbcType=BIGINT},
+      #{iscomputer,jdbcType=BIGINT},
+      #{isrouter,jdbcType=BIGINT},
+      #{isswitch,jdbcType=BIGINT},
+      #{isprinter,jdbcType=BIGINT},
+      #{displayname,jdbcType=VARCHAR},
+      #{iconId,jdbcType=BIGINT},
+      #{severity,jdbcType=BIGINT},
+      #{isHandwork,jdbcType=BIGINT},
+      #{panelId,jdbcType=BIGINT},
+      #{snmpConf,jdbcType=VARCHAR},
+      #{eventId,jdbcType=BIGINT},
+      #{sysLastconfigsavedtime,jdbcType=DATE},
+      #{modifyFlag,jdbcType=VARCHAR},
+      #{severityChangeTime,jdbcType=DATE},
+      #{spareIpAddresses,jdbcType=VARCHAR},
+      #{type2,jdbcType=BIGINT},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Node" >
+    update node
+    <set >
+      <if test="type != null" >
+        `TYPE` = #{type,jdbcType=BIGINT},
+      </if>
+      <if test="hostname != null" >
+        HOSTNAME = #{hostname,jdbcType=VARCHAR},
+      </if>
+      <if test="communityRo != null" >
+        COMMUNITY_RO = #{communityRo,jdbcType=VARCHAR},
+      </if>
+      <if test="communityRw != null" >
+        COMMUNITY_RW = #{communityRw,jdbcType=VARCHAR},
+      </if>
+      <if test="snmpSysname != null" >
+        SNMP_SYSNAME = #{snmpSysname,jdbcType=VARCHAR},
+      </if>
+      <if test="snmpSysdescr != null" >
+        SNMP_SYSDESCR = #{snmpSysdescr,jdbcType=VARCHAR},
+      </if>
+      <if test="snmpSyslocation != null" >
+        SNMP_SYSLOCATION = #{snmpSyslocation,jdbcType=VARCHAR},
+      </if>
+      <if test="snmpSyscontact != null" >
+        SNMP_SYSCONTACT = #{snmpSyscontact,jdbcType=VARCHAR},
+      </if>
+      <if test="snmpSysobjid != null" >
+        SNMP_SYSOBJID = #{snmpSysobjid,jdbcType=VARCHAR},
+      </if>
+      <if test="producerCode != null" >
+        PRODUCER_CODE = #{producerCode,jdbcType=BIGINT},
+      </if>
+      <if test="ifCount != null" >
+        IF_COUNT = #{ifCount,jdbcType=BIGINT},
+      </if>
+      <if test="ipAddress != null" >
+        IP_ADDRESS = #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ipNum != null" >
+        IP_NUM = #{ipNum,jdbcType=BIGINT},
+      </if>
+      <if test="sysUptime != null" >
+        SYS_UPTIME = #{sysUptime,jdbcType=DATE},
+      </if>
+      <if test="adminStatus != null" >
+        ADMIN_STATUS = #{adminStatus,jdbcType=BIGINT},
+      </if>
+      <if test="pollTime != null" >
+        POLL_TIME = #{pollTime,jdbcType=DATE},
+      </if>
+      <if test="bridgeAddress != null" >
+        BRIDGE_ADDRESS = #{bridgeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="vlanCount != null" >
+        VLAN_COUNT = #{vlanCount,jdbcType=BIGINT},
+      </if>
+      <if test="alarmLevel != null" >
+        ALARM_LEVEL = #{alarmLevel,jdbcType=BIGINT},
+      </if>
+      <if test="waterbox != null" >
+        WATERBOX = #{waterbox,jdbcType=BIGINT},
+      </if>
+      <if test="pollInterval != null" >
+        POLL_INTERVAL = #{pollInterval,jdbcType=BIGINT},
+      </if>
+      <if test="issnmpsupported != null" >
+        ISSNMPSUPPORTED = #{issnmpsupported,jdbcType=BIGINT},
+      </if>
+      <if test="iscomputer != null" >
+        ISCOMPUTER = #{iscomputer,jdbcType=BIGINT},
+      </if>
+      <if test="isrouter != null" >
+        ISROUTER = #{isrouter,jdbcType=BIGINT},
+      </if>
+      <if test="isswitch != null" >
+        ISSWITCH = #{isswitch,jdbcType=BIGINT},
+      </if>
+      <if test="isprinter != null" >
+        ISPRINTER = #{isprinter,jdbcType=BIGINT},
+      </if>
+      <if test="displayname != null" >
+        DISPLAYNAME = #{displayname,jdbcType=VARCHAR},
+      </if>
+      <if test="iconId != null" >
+        ICON_ID = #{iconId,jdbcType=BIGINT},
+      </if>
+      <if test="severity != null" >
+        SEVERITY = #{severity,jdbcType=BIGINT},
+      </if>
+      <if test="isHandwork != null" >
+        IS_HANDWORK = #{isHandwork,jdbcType=BIGINT},
+      </if>
+      <if test="panelId != null" >
+        PANEL_ID = #{panelId,jdbcType=BIGINT},
+      </if>
+      <if test="snmpConf != null" >
+        SNMP_CONF = #{snmpConf,jdbcType=VARCHAR},
+      </if>
+      <if test="eventId != null" >
+        EVENT_ID = #{eventId,jdbcType=BIGINT},
+      </if>
+      <if test="sysLastconfigsavedtime != null" >
+        SYS_LASTCONFIGSAVEDTIME = #{sysLastconfigsavedtime,jdbcType=DATE},
+      </if>
+      <if test="modifyFlag != null" >
+        MODIFY_FLAG = #{modifyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="severityChangeTime != null" >
+        SEVERITY_CHANGE_TIME = #{severityChangeTime,jdbcType=DATE},
+      </if>
+      <if test="spareIpAddresses != null" >
+        SPARE_IP_ADDRESSES = #{spareIpAddresses,jdbcType=VARCHAR},
+      </if>
+      <if test="type2 != null" >
+        TYPE2 = #{type2,jdbcType=BIGINT},
+      </if>
+    </set>
+    where NODE_ID = #{nodeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Node" >
+    update node
+    set `TYPE` = #{type,jdbcType=BIGINT},
+      HOSTNAME = #{hostname,jdbcType=VARCHAR},
+      COMMUNITY_RO = #{communityRo,jdbcType=VARCHAR},
+      COMMUNITY_RW = #{communityRw,jdbcType=VARCHAR},
+      SNMP_SYSNAME = #{snmpSysname,jdbcType=VARCHAR},
+      SNMP_SYSDESCR = #{snmpSysdescr,jdbcType=VARCHAR},
+      SNMP_SYSLOCATION = #{snmpSyslocation,jdbcType=VARCHAR},
+      SNMP_SYSCONTACT = #{snmpSyscontact,jdbcType=VARCHAR},
+      SNMP_SYSOBJID = #{snmpSysobjid,jdbcType=VARCHAR},
+      PRODUCER_CODE = #{producerCode,jdbcType=BIGINT},
+      IF_COUNT = #{ifCount,jdbcType=BIGINT},
+      IP_ADDRESS = #{ipAddress,jdbcType=VARCHAR},
+      IP_NUM = #{ipNum,jdbcType=BIGINT},
+      SYS_UPTIME = #{sysUptime,jdbcType=DATE},
+      ADMIN_STATUS = #{adminStatus,jdbcType=BIGINT},
+      POLL_TIME = #{pollTime,jdbcType=DATE},
+      BRIDGE_ADDRESS = #{bridgeAddress,jdbcType=VARCHAR},
+      VLAN_COUNT = #{vlanCount,jdbcType=BIGINT},
+      ALARM_LEVEL = #{alarmLevel,jdbcType=BIGINT},
+      WATERBOX = #{waterbox,jdbcType=BIGINT},
+      POLL_INTERVAL = #{pollInterval,jdbcType=BIGINT},
+      ISSNMPSUPPORTED = #{issnmpsupported,jdbcType=BIGINT},
+      ISCOMPUTER = #{iscomputer,jdbcType=BIGINT},
+      ISROUTER = #{isrouter,jdbcType=BIGINT},
+      ISSWITCH = #{isswitch,jdbcType=BIGINT},
+      ISPRINTER = #{isprinter,jdbcType=BIGINT},
+      DISPLAYNAME = #{displayname,jdbcType=VARCHAR},
+      ICON_ID = #{iconId,jdbcType=BIGINT},
+      SEVERITY = #{severity,jdbcType=BIGINT},
+      IS_HANDWORK = #{isHandwork,jdbcType=BIGINT},
+      PANEL_ID = #{panelId,jdbcType=BIGINT},
+      SNMP_CONF = #{snmpConf,jdbcType=VARCHAR},
+      EVENT_ID = #{eventId,jdbcType=BIGINT},
+      SYS_LASTCONFIGSAVEDTIME = #{sysLastconfigsavedtime,jdbcType=DATE},
+      MODIFY_FLAG = #{modifyFlag,jdbcType=VARCHAR},
+      SEVERITY_CHANGE_TIME = #{severityChangeTime,jdbcType=DATE},
+      SPARE_IP_ADDRESSES = #{spareIpAddresses,jdbcType=VARCHAR},
+      TYPE2 = #{type2,jdbcType=BIGINT}
+    where NODE_ID = #{nodeId,jdbcType=BIGINT}
+  </update>
+</mapper>

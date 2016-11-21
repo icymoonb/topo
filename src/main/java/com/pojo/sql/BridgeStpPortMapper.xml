@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.BridgeStpPortMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.BridgeStpPort" >
+    <result column="VLAN_INDEX" property="vlanIndex" jdbcType="BIGINT" />
+    <result column="PORT" property="port" jdbcType="BIGINT" />
+    <result column="NODE_ID" property="nodeId" jdbcType="BIGINT" />
+    <result column="DESIGNATED_ROOT" property="designatedRoot" jdbcType="VARCHAR" />
+    <result column="DESIGNATED_BRIDGE" property="designatedBridge" jdbcType="VARCHAR" />
+    <result column="DESIGNATED_PORT" property="designatedPort" jdbcType="BIGINT" />
+    <result column="STATE" property="state" jdbcType="BIGINT" />
+    <result column="SAMPLETIME" property="sampletime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    VLAN_INDEX, PORT, NODE_ID, DESIGNATED_ROOT, DESIGNATED_BRIDGE, DESIGNATED_PORT, `STATE`, 
+    SAMPLETIME
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pojo.BridgeStpPortExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bridge_stp_port
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap" parameterType="com.pojo.BridgeStpPortExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bridge_stp_port
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pojo.BridgeStpPortExample" >
+    delete from bridge_stp_port
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.pojo.BridgeStpPortExample" resultType="java.lang.Integer" >
+    select count(*) from bridge_stp_port
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bridge_stp_port
+    <set >
+      <if test="record.vlanIndex != null" >
+        VLAN_INDEX = #{record.vlanIndex,jdbcType=BIGINT},
+      </if>
+      <if test="record.port != null" >
+        PORT = #{record.port,jdbcType=BIGINT},
+      </if>
+      <if test="record.nodeId != null" >
+        NODE_ID = #{record.nodeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.designatedRoot != null" >
+        DESIGNATED_ROOT = #{record.designatedRoot,jdbcType=VARCHAR},
+      </if>
+      <if test="record.designatedBridge != null" >
+        DESIGNATED_BRIDGE = #{record.designatedBridge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.designatedPort != null" >
+        DESIGNATED_PORT = #{record.designatedPort,jdbcType=BIGINT},
+      </if>
+      <if test="record.state != null" >
+        `STATE` = #{record.state,jdbcType=BIGINT},
+      </if>
+      <if test="record.sampletime != null" >
+        SAMPLETIME = #{record.sampletime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bridge_stp_port
+    set VLAN_INDEX = #{record.vlanIndex,jdbcType=BIGINT},
+      PORT = #{record.port,jdbcType=BIGINT},
+      NODE_ID = #{record.nodeId,jdbcType=BIGINT},
+      DESIGNATED_ROOT = #{record.designatedRoot,jdbcType=VARCHAR},
+      DESIGNATED_BRIDGE = #{record.designatedBridge,jdbcType=VARCHAR},
+      DESIGNATED_PORT = #{record.designatedPort,jdbcType=BIGINT},
+      `STATE` = #{record.state,jdbcType=BIGINT},
+      SAMPLETIME = #{record.sampletime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <insert id="insert" parameterType="com.pojo.BridgeStpPort" >
+    insert into bridge_stp_port (VLAN_INDEX, PORT, NODE_ID, 
+      DESIGNATED_ROOT, DESIGNATED_BRIDGE, DESIGNATED_PORT, 
+      `STATE`, SAMPLETIME)
+    values (#{vlanIndex,jdbcType=BIGINT}, #{port,jdbcType=BIGINT}, #{nodeId,jdbcType=BIGINT}, 
+      #{designatedRoot,jdbcType=VARCHAR}, #{designatedBridge,jdbcType=VARCHAR}, #{designatedPort,jdbcType=BIGINT}, 
+      #{state,jdbcType=BIGINT}, #{sampletime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.BridgeStpPort" >
+    insert into bridge_stp_port
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      VLAN_INDEX,
+      PORT,
+      NODE_ID,
+      DESIGNATED_ROOT,
+      DESIGNATED_BRIDGE,
+      DESIGNATED_PORT,
+      `STATE`,
+      SAMPLETIME,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{vlanIndex,jdbcType=BIGINT},
+      #{port,jdbcType=BIGINT},
+      #{nodeId,jdbcType=BIGINT},
+      #{designatedRoot,jdbcType=VARCHAR},
+      #{designatedBridge,jdbcType=VARCHAR},
+      #{designatedPort,jdbcType=BIGINT},
+      #{state,jdbcType=BIGINT},
+      #{sampletime,jdbcType=DATE},
+    </trim>
+  </insert>
+</mapper>

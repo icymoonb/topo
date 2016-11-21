@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.TopoCommonMapper">
+<!--============================实体定义============================-->
+	<resultMap id="RoutePointMap" type="com.data.RoutePointData">
+		<id column="SRC_NODE_ID" property="srcNodeId" jdbcType="BIGINT" />
+		<result column="SRC_IF_INDEX" property="srcIfIndex" jdbcType="BIGINT" />
+		<result column="SRC_IF_ID" property="srcIfId" jdbcType="BIGINT" />
+		<result column="DEST_NODE_ID" property="destNodeId" jdbcType="BIGINT" />
+		<result column="DEST_IF_INDEX" property="destIfIndex" jdbcType="BIGINT" />
+		<result column="DEST_IF_ID" property="destIfId" jdbcType="BIGINT" />
+	</resultMap>
+	<resultMap id="PointMap" type="com.data.PointData">
+		<id column="SRC_NODE_ID" property="srcNodeId" jdbcType="BIGINT" />
+		<result column="SRC_IF_INDEX" property="srcIfIndex" jdbcType="BIGINT" />
+		<result column="SRC_IF_ID" property="srcIfId" jdbcType="BIGINT" />
+		<result column="DEST_NODE_ID" property="destNodeId" jdbcType="BIGINT" />
+		<result column="DEST_IF_INDEX" property="destIfIndex" jdbcType="BIGINT" />
+		<result column="DEST_IF_ID" property="destIfId" jdbcType="BIGINT" />
+		<result column="DEST_IF_NAME" property="destIfName" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="SingleAFTPointMap" type="com.data.SingleAFTPointData">
+		<id column="SRC_NODE_ID" property="srcNodeId" jdbcType="BIGINT" />
+		<result column="SRC_IF_ID" property="srcIfId" jdbcType="BIGINT" />
+		<result column="DEST_MAC" property="destMac" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ManualPointMap" type="com.data.ManualPointData">
+		<id column="UPLINK_NODE_ID" property="uplinkNodeId" jdbcType="BIGINT" />
+		<result column="UPLINK_IF_ID" property="uplinkIfId" jdbcType="BIGINT" />
+		<result column="NODE_ID" property="nodeId" jdbcType="BIGINT" />
+		<result column="IF_ID" property="ifId" jdbcType="BIGINT" />
+	</resultMap>
+	
+	<!--============================SQL语句============================-->
+	<select id="GetRoutePoint" resultMap="RoutePointMap">
+		SELECT
+			b.node_id as srcNodeId,
+			b.snmp_ifindex as srcIfIndex,
+			b.if_id as srcIfId,
+			c.node_id as destNodeId,
+			c.snmp_ifindex as destIfIndex,
+			c.if_id as destIfId
+		FROM
+			(SELECT a.network_id, MIN(a.if_id) left_if_id, MAX(a.if_id) right_if_id
+				FROM link a, TOPO.interface b 
+				WHERE a.if_id = b.if_id AND b.snmp_ifoperstatus = 1
+				GROUP BY network_id HAVING COUNT(*) = 2 
+				AND MIN(a.node_id) &lt;&gt; MAX(a.node_id)) a,
+			TOPO.interface b,
+			TOPO.interface c,
+			TOPO.node_status d,
+			TOPO.node_status e
+		WHERE
+			a.left_if_id = b.if_id
+			AND a.right_if_id = c.if_id
+			AND b.node_id = d.node_id
+			AND c.node_id = e.node_id
+			AND d.ip_state = 1
+			AND e.ip_state = 1;
+	</select>
+	
+	<select id="GetFullCDPPoint" resultMap="PointMap">
+		select
+			a.node_id as src_node_id,
+			b.snmp_ifindex as src_if_index,
+			min(b.if_id) as src_if_id,
+			d.node_id as dest_node_id,
+			d.snmp_ifindex as dest_if_index,
+			min(d.if_id) as dest_if_id,
+			min(a.remote_ifname) as dest_if_name
+		from
+			topo.cdp_cache a,
+			topo.interface b,
+			topo.interface c,
+			topo.interface d
+		where a.node_id = b.node_id
+			and a.if_index = b.snmp_ifindex
+			and a.remote_ipaddr = c.ip_address
+			and c.snmp_ifoperstatus != 2
+			and a.node_id != c.node_id
+			and c.node_id = d.node_id
+			and (a.remote_ifname = d.snmp_ifdescr or a.remote_ifname = d.snmp_ifname or
+				substr(a.remote_ifname, 0, instr(a.remote_ifname, '.') - 1) = d.snmp_ifdescr
+				or substr(a.remote_ifname, 0, instr(a.remote_ifname, '.') - 1) = d.snmp_ifname)
+		group by a.node_id, b.snmp_ifindex, d.node_id, d.snmp_ifindex
+		order by a.node_id, b.snmp_ifindex, d.node_id, d.snmp_ifindex, min(a.remote_ifname);
+	</select>
+	
+	<select id="GetSigleCDPPoint" resultMap="PointMap">
+		select
+			a.node_id as src_node_id,
+			b.snmp_ifindex src_if_index,
+			min(b.if_id) as src_if_id,
+			c.node_id as dest_node_id,
+			0 as dest_if_index,
+			0 as dest_if_id,
+			min(a.remote_ifname) as dest_if_name
+		from topo.cdp_cache a, 
+			topo.interface b,
+			topo.interface c
+		where a.node_id = b.node_id
+			and a.if_index = b.snmp_ifindex
+			and a.remote_ipaddr = c.ip_address
+			and c.snmp_ifoperstatus != 2
+			and a.node_id != c.node_id
+			and not exists (
+				select * from topo.interface d where c.node_id = d.node_id
+				and (a.remote_ifname = d.snmp_ifdescr
+				or a.remote_ifname = d.snmp_ifname
+				or substr(a.remote_ifname, 0, instr(a.remote_ifname, '.') - 1) =
+				d.snmp_ifdescr
+				or substr(a.remote_ifname, 0, instr(a.remote_ifname, '.') - 1) =
+				d.snmp_ifname))
+			and a.remote_ifname not like '%.%'
+		group by a.node_id, b.snmp_ifindex, c.node_id
+		order by a.node_id, b.snmp_ifindex, c.node_id, min(a.remote_ifname);
+	</select>
+	
+	<select id="GetFullSTPPoint" resultMap="RoutePointMap">
+	select 
+		a.node_id as src_node_id, 
+		b.if_index as src_if_index, 
+		d.if_id as src_if_id, 
+		a.dest_node_id as dest_node_id, 
+		c.if_index as dest_if_index, 
+		e.if_id as dest_if_id
+	from (select distinct z.port, z.node_id, z.designated_root, z.designated_bridge, z.designated_port, z.state, y.node_id dest_node_id 
+			from topo.bridge_stp_port z, topo.interface y where z.designated_bridge = y.snmp_ifphysaddr and z.node_id != y.node_id) a,
+        (select distinct node_id, port, if_index from topo.bridge_port_table) b,
+        (select distinct node_id, port, if_index from topo.bridge_port_table) c, 
+        topo.interface d, topo.interface e
+    where b.node_id = a.node_id and b.port = a.port
+        and c.node_id = a.dest_node_id and c.port = a.designated_port
+        and d.node_id = a.node_id and d.snmp_ifindex = b.if_index
+        and e.node_id = a.dest_node_id and e.snmp_ifindex = c.if_index
+	order by a.node_id, b.if_index, a.dest_node_id, c.if_index, d.if_id, e.if_id;
+	</select>
+	
+	<select id="GetSingleSTPPoint" resultMap="RoutePointMap">
+	select 
+	a.node_id as src_node_id, 
+	b.if_index as src_if_index, 
+	d.if_id as src_if_id, 
+	a.dest_node_id as dest_node_id, 
+	0 as dest_if_index,
+	0 as dest_if_id
+	from (select distinct z.port, z.node_id, z.designated_root, 
+			z.designated_bridge, z.designated_port, z.state, y.node_id dest_node_id 
+			from bridge_stp_port z, interface y 
+			where z.designated_bridge = y.snmp_ifphysaddr and z.node_id != y.node_id) a,
+        (select distinct node_id, port, if_index from bridge_port_table) b,        
+        interface d
+    where b.node_id = a.node_id and b.port = a.port        
+        and d.node_id = a.node_id and d.snmp_ifindex = b.if_index
+        and not exists (
+        	select * from bridge_port_table c where c.node_id = a.dest_node_id and c.port = a.designated_port
+        )        
+	order by a.node_id, b.if_index, a.dest_node_id;
+	</select>
+	
+	<!--
+	<select id="GetFullAFTPoint" resultMap="FullAFTPointMap">
+	</select>
+	-->
+	
+	<select id="GetSingleAFTPoint" resultMap="SingleAFTPointMap">
+	select
+		b.node_id as src_node_id,
+		min(b.if_id) as src_if_id,
+		a.address as dest_mac
+	from bridge_fdb a, interface b
+	where a.node_id = b.node_id and a.if_index = b.snmp_ifindex
+		and not exists
+		(select * from interface c where a.address = c.snmp_ifphysaddr)
+		and a.address &lt;&gt; '00:00:00:00:00:00'
+		and a.address &lt;&gt; 'FF:FF:FF:FF:FF:FF'
+	group by b.node_id, a.address;
+	</select>
+	
+	<select id="GetManualPoint" resultMap="ManualPointMap">
+		select distinct uplink_node_id, uplink_if_id, node_id, if_id
+        from line
+        where type = 3 or is_hide = 1;
+	</select>
+</mapper>

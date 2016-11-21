@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.InterfaceMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Interface" >
+    <id column="IF_ID" property="ifId" jdbcType="BIGINT" />
+    <result column="NODE_ID" property="nodeId" jdbcType="BIGINT" />
+    <result column="IP_ADDRESS" property="ipAddress" jdbcType="VARCHAR" />
+    <result column="IP_NUM" property="ipNum" jdbcType="BIGINT" />
+    <result column="IP_NETMASK" property="ipNetmask" jdbcType="VARCHAR" />
+    <result column="IP_STATE" property="ipState" jdbcType="BIGINT" />
+    <result column="ADMIN_STATUS" property="adminStatus" jdbcType="BIGINT" />
+    <result column="LEGALITY" property="legality" jdbcType="BIGINT" />
+    <result column="BIND_STATUS" property="bindStatus" jdbcType="BIGINT" />
+    <result column="SNMP_IFINDEX" property="snmpIfindex" jdbcType="BIGINT" />
+    <result column="SNMP_IFDESCR" property="snmpIfdescr" jdbcType="VARCHAR" />
+    <result column="SNMP_IFTYPE" property="snmpIftype" jdbcType="BIGINT" />
+    <result column="SNMP_IFMTU" property="snmpIfmtu" jdbcType="BIGINT" />
+    <result column="SNMP_IFSPEED" property="snmpIfspeed" jdbcType="BIGINT" />
+    <result column="SNMP_IFOPERSTATUS" property="snmpIfoperstatus" jdbcType="BIGINT" />
+    <result column="SNMP_IFPHYSADDR" property="snmpIfphysaddr" jdbcType="VARCHAR" />
+    <result column="SNMP_IFNAME" property="snmpIfname" jdbcType="VARCHAR" />
+    <result column="SNMP_IFALIAS" property="snmpIfalias" jdbcType="VARCHAR" />
+    <result column="SWITCH_PORT" property="switchPort" jdbcType="BIGINT" />
+    <result column="SNMP_IFINOCTETS" property="snmpIfinoctets" jdbcType="BIGINT" />
+    <result column="SNMP_IFOUTOCTETS" property="snmpIfoutoctets" jdbcType="BIGINT" />
+    <result column="LAST_SNMP_IFINOCTETS" property="lastSnmpIfinoctets" jdbcType="BIGINT" />
+    <result column="LAST_SNMP_IFOUTOCTETS" property="lastSnmpIfoutoctets" jdbcType="BIGINT" />
+    <result column="COLLECT_TIME" property="collectTime" jdbcType="DATE" />
+    <result column="LAST_COLLECT_TIME" property="lastCollectTime" jdbcType="DATE" />
+    <result column="LAST_STATUS_CHANGE" property="lastStatusChange" jdbcType="DATE" />
+    <result column="DISPLAYNAME" property="displayname" jdbcType="VARCHAR" />
+    <result column="MODIFY_FLAG" property="modifyFlag" jdbcType="VARCHAR" />
+    <result column="IF_WORKMODE" property="ifWorkmode" jdbcType="BIGINT" />
+    <result column="IS_HIDE" property="isHide" jdbcType="BIGINT" />
+    <result column="TYPE" property="type" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    IF_ID, NODE_ID, IP_ADDRESS, IP_NUM, IP_NETMASK, IP_STATE, ADMIN_STATUS, LEGALITY, 
+    BIND_STATUS, SNMP_IFINDEX, SNMP_IFDESCR, SNMP_IFTYPE, SNMP_IFMTU, SNMP_IFSPEED, SNMP_IFOPERSTATUS, 
+    SNMP_IFPHYSADDR, SNMP_IFNAME, SNMP_IFALIAS, SWITCH_PORT, SNMP_IFINOCTETS, SNMP_IFOUTOCTETS, 
+    LAST_SNMP_IFINOCTETS, LAST_SNMP_IFOUTOCTETS, COLLECT_TIME, LAST_COLLECT_TIME, LAST_STATUS_CHANGE, 
+    DISPLAYNAME, MODIFY_FLAG, IF_WORKMODE, IS_HIDE, `TYPE`
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pojo.InterfaceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from interface
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap" parameterType="com.pojo.InterfaceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from interface
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pojo.InterfaceExample" >
+    delete from interface
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.pojo.InterfaceExample" resultType="java.lang.Integer" >
+    select count(*) from interface
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update interface
+    <set >
+      <if test="record.ifId != null" >
+        IF_ID = #{record.ifId,jdbcType=BIGINT},
+      </if>
+      <if test="record.nodeId != null" >
+        NODE_ID = #{record.nodeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ipAddress != null" >
+        IP_ADDRESS = #{record.ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ipNum != null" >
+        IP_NUM = #{record.ipNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.ipNetmask != null" >
+        IP_NETMASK = #{record.ipNetmask,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ipState != null" >
+        IP_STATE = #{record.ipState,jdbcType=BIGINT},
+      </if>
+      <if test="record.adminStatus != null" >
+        ADMIN_STATUS = #{record.adminStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.legality != null" >
+        LEGALITY = #{record.legality,jdbcType=BIGINT},
+      </if>
+      <if test="record.bindStatus != null" >
+        BIND_STATUS = #{record.bindStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.snmpIfindex != null" >
+        SNMP_IFINDEX = #{record.snmpIfindex,jdbcType=BIGINT},
+      </if>
+      <if test="record.snmpIfdescr != null" >
+        SNMP_IFDESCR = #{record.snmpIfdescr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.snmpIftype != null" >
+        SNMP_IFTYPE = #{record.snmpIftype,jdbcType=BIGINT},
+      </if>
+      <if test="record.snmpIfmtu != null" >
+        SNMP_IFMTU = #{record.snmpIfmtu,jdbcType=BIGINT},
+      </if>
+      <if test="record.snmpIfspeed != null" >
+        SNMP_IFSPEED = #{record.snmpIfspeed,jdbcType=BIGINT},
+      </if>
+      <if test="record.snmpIfoperstatus != null" >
+        SNMP_IFOPERSTATUS = #{record.snmpIfoperstatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.snmpIfphysaddr != null" >
+        SNMP_IFPHYSADDR = #{record.snmpIfphysaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.snmpIfname != null" >
+        SNMP_IFNAME = #{record.snmpIfname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.snmpIfalias != null" >
+        SNMP_IFALIAS = #{record.snmpIfalias,jdbcType=VARCHAR},
+      </if>
+      <if test="record.switchPort != null" >
+        SWITCH_PORT = #{record.switchPort,jdbcType=BIGINT},
+      </if>
+      <if test="record.snmpIfinoctets != null" >
+        SNMP_IFINOCTETS = #{record.snmpIfinoctets,jdbcType=BIGINT},
+      </if>
+      <if test="record.snmpIfoutoctets != null" >
+        SNMP_IFOUTOCTETS = #{record.snmpIfoutoctets,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastSnmpIfinoctets != null" >
+        LAST_SNMP_IFINOCTETS = #{record.lastSnmpIfinoctets,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastSnmpIfoutoctets != null" >
+        LAST_SNMP_IFOUTOCTETS = #{record.lastSnmpIfoutoctets,jdbcType=BIGINT},
+      </if>
+      <if test="record.collectTime != null" >
+        COLLECT_TIME = #{record.collectTime,jdbcType=DATE},
+      </if>
+      <if test="record.lastCollectTime != null" >
+        LAST_COLLECT_TIME = #{record.lastCollectTime,jdbcType=DATE},
+      </if>
+      <if test="record.lastStatusChange != null" >
+        LAST_STATUS_CHANGE = #{record.lastStatusChange,jdbcType=DATE},
+      </if>
+      <if test="record.displayname != null" >
+        DISPLAYNAME = #{record.displayname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyFlag != null" >
+        MODIFY_FLAG = #{record.modifyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ifWorkmode != null" >
+        IF_WORKMODE = #{record.ifWorkmode,jdbcType=BIGINT},
+      </if>
+      <if test="record.isHide != null" >
+        IS_HIDE = #{record.isHide,jdbcType=BIGINT},
+      </if>
+      <if test="record.type != null" >
+        `TYPE` = #{record.type,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update interface
+    set IF_ID = #{record.ifId,jdbcType=BIGINT},
+      NODE_ID = #{record.nodeId,jdbcType=BIGINT},
+      IP_ADDRESS = #{record.ipAddress,jdbcType=VARCHAR},
+      IP_NUM = #{record.ipNum,jdbcType=BIGINT},
+      IP_NETMASK = #{record.ipNetmask,jdbcType=VARCHAR},
+      IP_STATE = #{record.ipState,jdbcType=BIGINT},
+      ADMIN_STATUS = #{record.adminStatus,jdbcType=BIGINT},
+      LEGALITY = #{record.legality,jdbcType=BIGINT},
+      BIND_STATUS = #{record.bindStatus,jdbcType=BIGINT},
+      SNMP_IFINDEX = #{record.snmpIfindex,jdbcType=BIGINT},
+      SNMP_IFDESCR = #{record.snmpIfdescr,jdbcType=VARCHAR},
+      SNMP_IFTYPE = #{record.snmpIftype,jdbcType=BIGINT},
+      SNMP_IFMTU = #{record.snmpIfmtu,jdbcType=BIGINT},
+      SNMP_IFSPEED = #{record.snmpIfspeed,jdbcType=BIGINT},
+      SNMP_IFOPERSTATUS = #{record.snmpIfoperstatus,jdbcType=BIGINT},
+      SNMP_IFPHYSADDR = #{record.snmpIfphysaddr,jdbcType=VARCHAR},
+      SNMP_IFNAME = #{record.snmpIfname,jdbcType=VARCHAR},
+      SNMP_IFALIAS = #{record.snmpIfalias,jdbcType=VARCHAR},
+      SWITCH_PORT = #{record.switchPort,jdbcType=BIGINT},
+      SNMP_IFINOCTETS = #{record.snmpIfinoctets,jdbcType=BIGINT},
+      SNMP_IFOUTOCTETS = #{record.snmpIfoutoctets,jdbcType=BIGINT},
+      LAST_SNMP_IFINOCTETS = #{record.lastSnmpIfinoctets,jdbcType=BIGINT},
+      LAST_SNMP_IFOUTOCTETS = #{record.lastSnmpIfoutoctets,jdbcType=BIGINT},
+      COLLECT_TIME = #{record.collectTime,jdbcType=DATE},
+      LAST_COLLECT_TIME = #{record.lastCollectTime,jdbcType=DATE},
+      LAST_STATUS_CHANGE = #{record.lastStatusChange,jdbcType=DATE},
+      DISPLAYNAME = #{record.displayname,jdbcType=VARCHAR},
+      MODIFY_FLAG = #{record.modifyFlag,jdbcType=VARCHAR},
+      IF_WORKMODE = #{record.ifWorkmode,jdbcType=BIGINT},
+      IS_HIDE = #{record.isHide,jdbcType=BIGINT},
+      `TYPE` = #{record.type,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from interface
+    where IF_ID = #{ifId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from interface
+    where IF_ID = #{ifId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Interface" >
+    insert into interface (IF_ID, NODE_ID, IP_ADDRESS, 
+      IP_NUM, IP_NETMASK, IP_STATE, 
+      ADMIN_STATUS, LEGALITY, BIND_STATUS, 
+      SNMP_IFINDEX, SNMP_IFDESCR, SNMP_IFTYPE, 
+      SNMP_IFMTU, SNMP_IFSPEED, SNMP_IFOPERSTATUS, 
+      SNMP_IFPHYSADDR, SNMP_IFNAME, SNMP_IFALIAS, 
+      SWITCH_PORT, SNMP_IFINOCTETS, SNMP_IFOUTOCTETS, 
+      LAST_SNMP_IFINOCTETS, LAST_SNMP_IFOUTOCTETS, 
+      COLLECT_TIME, LAST_COLLECT_TIME, LAST_STATUS_CHANGE, 
+      DISPLAYNAME, MODIFY_FLAG, IF_WORKMODE, 
+      IS_HIDE, `TYPE`)
+    values (#{ifId,jdbcType=BIGINT}, #{nodeId,jdbcType=BIGINT}, #{ipAddress,jdbcType=VARCHAR}, 
+      #{ipNum,jdbcType=BIGINT}, #{ipNetmask,jdbcType=VARCHAR}, #{ipState,jdbcType=BIGINT}, 
+      #{adminStatus,jdbcType=BIGINT}, #{legality,jdbcType=BIGINT}, #{bindStatus,jdbcType=BIGINT}, 
+      #{snmpIfindex,jdbcType=BIGINT}, #{snmpIfdescr,jdbcType=VARCHAR}, #{snmpIftype,jdbcType=BIGINT}, 
+      #{snmpIfmtu,jdbcType=BIGINT}, #{snmpIfspeed,jdbcType=BIGINT}, #{snmpIfoperstatus,jdbcType=BIGINT}, 
+      #{snmpIfphysaddr,jdbcType=VARCHAR}, #{snmpIfname,jdbcType=VARCHAR}, #{snmpIfalias,jdbcType=VARCHAR}, 
+      #{switchPort,jdbcType=BIGINT}, #{snmpIfinoctets,jdbcType=BIGINT}, #{snmpIfoutoctets,jdbcType=BIGINT}, 
+      #{lastSnmpIfinoctets,jdbcType=BIGINT}, #{lastSnmpIfoutoctets,jdbcType=BIGINT}, 
+      #{collectTime,jdbcType=DATE}, #{lastCollectTime,jdbcType=DATE}, #{lastStatusChange,jdbcType=DATE}, 
+      #{displayname,jdbcType=VARCHAR}, #{modifyFlag,jdbcType=VARCHAR}, #{ifWorkmode,jdbcType=BIGINT}, 
+      #{isHide,jdbcType=BIGINT}, #{type,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Interface" >
+    insert into interface
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      IF_ID,
+      NODE_ID,
+      IP_ADDRESS,
+      IP_NUM,
+      IP_NETMASK,
+      IP_STATE,
+      ADMIN_STATUS,
+      LEGALITY,
+      BIND_STATUS,
+      SNMP_IFINDEX,
+      SNMP_IFDESCR,
+      SNMP_IFTYPE,
+      SNMP_IFMTU,
+      SNMP_IFSPEED,
+      SNMP_IFOPERSTATUS,
+      SNMP_IFPHYSADDR,
+      SNMP_IFNAME,
+      SNMP_IFALIAS,
+      SWITCH_PORT,
+      SNMP_IFINOCTETS,
+      SNMP_IFOUTOCTETS,
+      LAST_SNMP_IFINOCTETS,
+      LAST_SNMP_IFOUTOCTETS,
+      COLLECT_TIME,
+      LAST_COLLECT_TIME,
+      LAST_STATUS_CHANGE,
+      DISPLAYNAME,
+      MODIFY_FLAG,
+      IF_WORKMODE,
+      IS_HIDE,
+      `TYPE`,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{ifId,jdbcType=BIGINT},
+      #{nodeId,jdbcType=BIGINT},
+      #{ipAddress,jdbcType=VARCHAR},
+      #{ipNum,jdbcType=BIGINT},
+      #{ipNetmask,jdbcType=VARCHAR},
+      #{ipState,jdbcType=BIGINT},
+      #{adminStatus,jdbcType=BIGINT},
+      #{legality,jdbcType=BIGINT},
+      #{bindStatus,jdbcType=BIGINT},
+      #{snmpIfindex,jdbcType=BIGINT},
+      #{snmpIfdescr,jdbcType=VARCHAR},
+      #{snmpIftype,jdbcType=BIGINT},
+      #{snmpIfmtu,jdbcType=BIGINT},
+      #{snmpIfspeed,jdbcType=BIGINT},
+      #{snmpIfoperstatus,jdbcType=BIGINT},
+      #{snmpIfphysaddr,jdbcType=VARCHAR},
+      #{snmpIfname,jdbcType=VARCHAR},
+      #{snmpIfalias,jdbcType=VARCHAR},
+      #{switchPort,jdbcType=BIGINT},
+      #{snmpIfinoctets,jdbcType=BIGINT},
+      #{snmpIfoutoctets,jdbcType=BIGINT},
+      #{lastSnmpIfinoctets,jdbcType=BIGINT},
+      #{lastSnmpIfoutoctets,jdbcType=BIGINT},
+      #{collectTime,jdbcType=DATE},
+      #{lastCollectTime,jdbcType=DATE},
+      #{lastStatusChange,jdbcType=DATE},
+      #{displayname,jdbcType=VARCHAR},
+      #{modifyFlag,jdbcType=VARCHAR},
+      #{ifWorkmode,jdbcType=BIGINT},
+      #{isHide,jdbcType=BIGINT},
+      #{type,jdbcType=BIGINT},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Interface" >
+    update interface
+    <set >
+      <if test="nodeId != null" >
+        NODE_ID = #{nodeId,jdbcType=BIGINT},
+      </if>
+      <if test="ipAddress != null" >
+        IP_ADDRESS = #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ipNum != null" >
+        IP_NUM = #{ipNum,jdbcType=BIGINT},
+      </if>
+      <if test="ipNetmask != null" >
+        IP_NETMASK = #{ipNetmask,jdbcType=VARCHAR},
+      </if>
+      <if test="ipState != null" >
+        IP_STATE = #{ipState,jdbcType=BIGINT},
+      </if>
+      <if test="adminStatus != null" >
+        ADMIN_STATUS = #{adminStatus,jdbcType=BIGINT},
+      </if>
+      <if test="legality != null" >
+        LEGALITY = #{legality,jdbcType=BIGINT},
+      </if>
+      <if test="bindStatus != null" >
+        BIND_STATUS = #{bindStatus,jdbcType=BIGINT},
+      </if>
+      <if test="snmpIfindex != null" >
+        SNMP_IFINDEX = #{snmpIfindex,jdbcType=BIGINT},
+      </if>
+      <if test="snmpIfdescr != null" >
+        SNMP_IFDESCR = #{snmpIfdescr,jdbcType=VARCHAR},
+      </if>
+      <if test="snmpIftype != null" >
+        SNMP_IFTYPE = #{snmpIftype,jdbcType=BIGINT},
+      </if>
+      <if test="snmpIfmtu != null" >
+        SNMP_IFMTU = #{snmpIfmtu,jdbcType=BIGINT},
+      </if>
+      <if test="snmpIfspeed != null" >
+        SNMP_IFSPEED = #{snmpIfspeed,jdbcType=BIGINT},
+      </if>
+      <if test="snmpIfoperstatus != null" >
+        SNMP_IFOPERSTATUS = #{snmpIfoperstatus,jdbcType=BIGINT},
+      </if>
+      <if test="snmpIfphysaddr != null" >
+        SNMP_IFPHYSADDR = #{snmpIfphysaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="snmpIfname != null" >
+        SNMP_IFNAME = #{snmpIfname,jdbcType=VARCHAR},
+      </if>
+      <if test="snmpIfalias != null" >
+        SNMP_IFALIAS = #{snmpIfalias,jdbcType=VARCHAR},
+      </if>
+      <if test="switchPort != null" >
+        SWITCH_PORT = #{switchPort,jdbcType=BIGINT},
+      </if>
+      <if test="snmpIfinoctets != null" >
+        SNMP_IFINOCTETS = #{snmpIfinoctets,jdbcType=BIGINT},
+      </if>
+      <if test="snmpIfoutoctets != null" >
+        SNMP_IFOUTOCTETS = #{snmpIfoutoctets,jdbcType=BIGINT},
+      </if>
+      <if test="lastSnmpIfinoctets != null" >
+        LAST_SNMP_IFINOCTETS = #{lastSnmpIfinoctets,jdbcType=BIGINT},
+      </if>
+      <if test="lastSnmpIfoutoctets != null" >
+        LAST_SNMP_IFOUTOCTETS = #{lastSnmpIfoutoctets,jdbcType=BIGINT},
+      </if>
+      <if test="collectTime != null" >
+        COLLECT_TIME = #{collectTime,jdbcType=DATE},
+      </if>
+      <if test="lastCollectTime != null" >
+        LAST_COLLECT_TIME = #{lastCollectTime,jdbcType=DATE},
+      </if>
+      <if test="lastStatusChange != null" >
+        LAST_STATUS_CHANGE = #{lastStatusChange,jdbcType=DATE},
+      </if>
+      <if test="displayname != null" >
+        DISPLAYNAME = #{displayname,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyFlag != null" >
+        MODIFY_FLAG = #{modifyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="ifWorkmode != null" >
+        IF_WORKMODE = #{ifWorkmode,jdbcType=BIGINT},
+      </if>
+      <if test="isHide != null" >
+        IS_HIDE = #{isHide,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        `TYPE` = #{type,jdbcType=BIGINT},
+      </if>
+    </set>
+    where IF_ID = #{ifId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Interface" >
+    update interface
+    set NODE_ID = #{nodeId,jdbcType=BIGINT},
+      IP_ADDRESS = #{ipAddress,jdbcType=VARCHAR},
+      IP_NUM = #{ipNum,jdbcType=BIGINT},
+      IP_NETMASK = #{ipNetmask,jdbcType=VARCHAR},
+      IP_STATE = #{ipState,jdbcType=BIGINT},
+      ADMIN_STATUS = #{adminStatus,jdbcType=BIGINT},
+      LEGALITY = #{legality,jdbcType=BIGINT},
+      BIND_STATUS = #{bindStatus,jdbcType=BIGINT},
+      SNMP_IFINDEX = #{snmpIfindex,jdbcType=BIGINT},
+      SNMP_IFDESCR = #{snmpIfdescr,jdbcType=VARCHAR},
+      SNMP_IFTYPE = #{snmpIftype,jdbcType=BIGINT},
+      SNMP_IFMTU = #{snmpIfmtu,jdbcType=BIGINT},
+      SNMP_IFSPEED = #{snmpIfspeed,jdbcType=BIGINT},
+      SNMP_IFOPERSTATUS = #{snmpIfoperstatus,jdbcType=BIGINT},
+      SNMP_IFPHYSADDR = #{snmpIfphysaddr,jdbcType=VARCHAR},
+      SNMP_IFNAME = #{snmpIfname,jdbcType=VARCHAR},
+      SNMP_IFALIAS = #{snmpIfalias,jdbcType=VARCHAR},
+      SWITCH_PORT = #{switchPort,jdbcType=BIGINT},
+      SNMP_IFINOCTETS = #{snmpIfinoctets,jdbcType=BIGINT},
+      SNMP_IFOUTOCTETS = #{snmpIfoutoctets,jdbcType=BIGINT},
+      LAST_SNMP_IFINOCTETS = #{lastSnmpIfinoctets,jdbcType=BIGINT},
+      LAST_SNMP_IFOUTOCTETS = #{lastSnmpIfoutoctets,jdbcType=BIGINT},
+      COLLECT_TIME = #{collectTime,jdbcType=DATE},
+      LAST_COLLECT_TIME = #{lastCollectTime,jdbcType=DATE},
+      LAST_STATUS_CHANGE = #{lastStatusChange,jdbcType=DATE},
+      DISPLAYNAME = #{displayname,jdbcType=VARCHAR},
+      MODIFY_FLAG = #{modifyFlag,jdbcType=VARCHAR},
+      IF_WORKMODE = #{ifWorkmode,jdbcType=BIGINT},
+      IS_HIDE = #{isHide,jdbcType=BIGINT},
+      `TYPE` = #{type,jdbcType=BIGINT}
+    where IF_ID = #{ifId,jdbcType=BIGINT}
+  </update>
+</mapper>

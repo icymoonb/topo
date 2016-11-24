@@ -1,7 +1,7 @@
 package com.entity;
 
-public enum IndirectReliably {
-	IR_Indirect0,
-	IR_Indirect1,
-	IR_Direct
+public class IndirectReliably {
+	public static int IR_Indirect0=0;
+	public static int IR_Indirect1=1;
+	public static int IR_Direct=2;
 }

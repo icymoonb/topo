@@ -2,20 +2,21 @@ package com.entity;
 
 import java.util.ArrayList;
 
+import com.pojo.Node;
+
 public class NodeIfIndirect {
-	ArrayList<Indirect> indirects;
-	ArrayList<NodeIfIndirect> nodeIfIndirects;
-	public ArrayList<Indirect> getIndirects() {
-		return indirects;
+	private Node node;
+	private ArrayList<IfIndirect> ifIndirects = new ArrayList<IfIndirect>();
+	public Node getNode() {
+		return node;
 	}
-	public void setIndirects(ArrayList<Indirect> indirects) {
-		this.indirects = indirects;
+	public void setNode(Node node) {
+		this.node = node;
 	}
-	public ArrayList<NodeIfIndirect> getNodeIfIndirects() {
-		return nodeIfIndirects;
+	public ArrayList<IfIndirect> getIfIndirects() {
+		return ifIndirects;
 	}
-	public void setNodeIfIndirects(ArrayList<NodeIfIndirect> nodeIfIndirects) {
-		this.nodeIfIndirects = nodeIfIndirects;
+	public void setIfIndirects(ArrayList<IfIndirect> ifIndirects) {
+		this.ifIndirects = ifIndirects;
 	}
-	
 }

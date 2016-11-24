@@ -8,7 +8,7 @@ public class Indirect {
 	Interface if1 = null;
 	Node node2 = null;
 	Interface if2 = null;
-	IndirectReliably reliaby = null;
+	int reliably;
 	public Node getNode1() {
 		return node1;
 	}
@@ -33,11 +33,18 @@ public class Indirect {
 	public void setIf2(Interface if2) {
 		this.if2 = if2;
 	}
-	public IndirectReliably getReliaby() {
-		return reliaby;
+	public int getReliably() {
+		return reliably;
 	}
-	public void setReliaby(IndirectReliably reliaby) {
-		this.reliaby = reliaby;
+	public void setReliably(int reliably) {
+		this.reliably = reliably;
 	}
-	
+	public Direct changeToDirect() {
+		Direct direct = new Direct();
+		direct.setIf1(this.if1);
+		direct.setIf2(this.if2);
+		direct.setNode1(this.node1);
+		direct.setNode2(this.node2);
+		return direct;
+	}
 }

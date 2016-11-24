@@ -32,7 +32,7 @@
 	</resultMap>
 	
 	<!--============================SQL语句============================-->
-	<select id="GetRoutePoint" resultMap="RoutePointMap">
+	<select id="getRoutePoint" resultMap="RoutePointMap">
 		SELECT
 			b.node_id as srcNodeId,
 			b.snmp_ifindex as srcIfIndex,
@@ -42,14 +42,14 @@
 			c.if_id as destIfId
 		FROM
 			(SELECT a.network_id, MIN(a.if_id) left_if_id, MAX(a.if_id) right_if_id
-				FROM link a, TOPO.interface b 
+				FROM link a, interface b 
 				WHERE a.if_id = b.if_id AND b.snmp_ifoperstatus = 1
 				GROUP BY network_id HAVING COUNT(*) = 2 
 				AND MIN(a.node_id) &lt;&gt; MAX(a.node_id)) a,
-			TOPO.interface b,
-			TOPO.interface c,
-			TOPO.node_status d,
-			TOPO.node_status e
+			interface b,
+			interface c,
+			node_status d,
+			node_status e
 		WHERE
 			a.left_if_id = b.if_id
 			AND a.right_if_id = c.if_id
@@ -59,7 +59,7 @@
 			AND e.ip_state = 1;
 	</select>
 	
-	<select id="GetFullCDPPoint" resultMap="PointMap">
+	<select id="getFullCDPPoint" resultMap="PointMap">
 		select
 			a.node_id as src_node_id,
 			b.snmp_ifindex as src_if_index,
@@ -69,10 +69,10 @@
 			min(d.if_id) as dest_if_id,
 			min(a.remote_ifname) as dest_if_name
 		from
-			topo.cdp_cache a,
-			topo.interface b,
-			topo.interface c,
-			topo.interface d
+			cdp_cache a,
+			interface b,
+			interface c,
+			interface d
 		where a.node_id = b.node_id
 			and a.if_index = b.snmp_ifindex
 			and a.remote_ipaddr = c.ip_address
@@ -86,7 +86,7 @@
 		order by a.node_id, b.snmp_ifindex, d.node_id, d.snmp_ifindex, min(a.remote_ifname);
 	</select>
 	
-	<select id="GetSigleCDPPoint" resultMap="PointMap">
+	<select id="getSingleCDPPoint" resultMap="PointMap">
 		select
 			a.node_id as src_node_id,
 			b.snmp_ifindex src_if_index,
@@ -95,16 +95,16 @@
 			0 as dest_if_index,
 			0 as dest_if_id,
 			min(a.remote_ifname) as dest_if_name
-		from topo.cdp_cache a, 
-			topo.interface b,
-			topo.interface c
+		from cdp_cache a, 
+			interface b,
+			interface c
 		where a.node_id = b.node_id
 			and a.if_index = b.snmp_ifindex
 			and a.remote_ipaddr = c.ip_address
 			and c.snmp_ifoperstatus != 2
 			and a.node_id != c.node_id
 			and not exists (
-				select * from topo.interface d where c.node_id = d.node_id
+				select * from interface d where c.node_id = d.node_id
 				and (a.remote_ifname = d.snmp_ifdescr
 				or a.remote_ifname = d.snmp_ifname
 				or substr(a.remote_ifname, 0, instr(a.remote_ifname, '.') - 1) =
@@ -116,7 +116,7 @@
 		order by a.node_id, b.snmp_ifindex, c.node_id, min(a.remote_ifname);
 	</select>
 	
-	<select id="GetFullSTPPoint" resultMap="RoutePointMap">
+	<select id="getFullSTPPoint" resultMap="RoutePointMap">
 	select 
 		a.node_id as src_node_id, 
 		b.if_index as src_if_index, 
@@ -125,10 +125,10 @@
 		c.if_index as dest_if_index, 
 		e.if_id as dest_if_id
 	from (select distinct z.port, z.node_id, z.designated_root, z.designated_bridge, z.designated_port, z.state, y.node_id dest_node_id 
-			from topo.bridge_stp_port z, topo.interface y where z.designated_bridge = y.snmp_ifphysaddr and z.node_id != y.node_id) a,
-        (select distinct node_id, port, if_index from topo.bridge_port_table) b,
-        (select distinct node_id, port, if_index from topo.bridge_port_table) c, 
-        topo.interface d, topo.interface e
+			from bridge_stp_port z, interface y where z.designated_bridge = y.snmp_ifphysaddr and z.node_id != y.node_id) a,
+        (select distinct node_id, port, if_index from bridge_port_table) b,
+        (select distinct node_id, port, if_index from bridge_port_table) c, 
+        interface d, interface e
     where b.node_id = a.node_id and b.port = a.port
         and c.node_id = a.dest_node_id and c.port = a.designated_port
         and d.node_id = a.node_id and d.snmp_ifindex = b.if_index
@@ -136,7 +136,7 @@
 	order by a.node_id, b.if_index, a.dest_node_id, c.if_index, d.if_id, e.if_id;
 	</select>
 	
-	<select id="GetSingleSTPPoint" resultMap="RoutePointMap">
+	<select id="getSingleSTPPoint" resultMap="RoutePointMap">
 	select 
 	a.node_id as src_node_id, 
 	b.if_index as src_if_index, 
@@ -159,11 +159,11 @@
 	</select>
 	
 	<!--
-	<select id="GetFullAFTPoint" resultMap="FullAFTPointMap">
+	<select id="getFullAFTPoint" resultMap="FullAFTPointMap">
 	</select>
 	-->
 	
-	<select id="GetSingleAFTPoint" resultMap="SingleAFTPointMap">
+	<select id="getSingleAFTPoint" resultMap="SingleAFTPointMap">
 	select
 		b.node_id as src_node_id,
 		min(b.if_id) as src_if_id,
@@ -177,7 +177,7 @@
 	group by b.node_id, a.address;
 	</select>
 	
-	<select id="GetManualPoint" resultMap="ManualPointMap">
+	<select id="getManualPoint" resultMap="ManualPointMap">
 		select distinct uplink_node_id, uplink_if_id, node_id, if_id
         from line
         where type = 3 or is_hide = 1;

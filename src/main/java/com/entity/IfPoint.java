@@ -6,7 +6,7 @@ import com.pojo.Interface;
 
 public class IfPoint {
 	Interface srcIf = null;
-	ArrayList<Point> points = null;
+	ArrayList<Point> points = new ArrayList<Point>();
 	public Interface getSrcIf() {
 		return srcIf;
 	}

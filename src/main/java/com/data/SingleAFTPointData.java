@@ -1,22 +1,22 @@
 package com.data;
 
 public class SingleAFTPointData {
-	private int srcNodeId;
-	private int srcIfId;
+	private long srcNodeId;
+	private long srcIfId;
 	private String destMac;
-	private int destNodeId = 0;
-	private int destIfId = 0;
+	private long destNodeId = 0;
+	private long destIfId = 0;
 	
-	public int getSrcNodeId() {
+	public long getSrcNodeId() {
 		return srcNodeId;
 	}
-	public void setSrcNodeId(int srcNodeId) {
+	public void setSrcNodeId(long srcNodeId) {
 		this.srcNodeId = srcNodeId;
 	}
-	public int getSrcIfId() {
+	public long getSrcIfId() {
 		return srcIfId;
 	}
-	public void setSrcIfId(int srcIfId) {
+	public void setSrcIfId(long srcIfId) {
 		this.srcIfId = srcIfId;
 	}
 	public String getDestMac() {
@@ -25,16 +25,16 @@ public class SingleAFTPointData {
 	public void setDestMac(String destMac) {
 		this.destMac = destMac;
 	}
-	public int getDestNodeId() {
+	public long getDestNodeId() {
 		return destNodeId;
 	}
-	public void setDestNodeId(int destNodeId) {
+	public void setDestNodeId(long destNodeId) {
 		this.destNodeId = destNodeId;
 	}
-	public int getDestIfId() {
+	public long getDestIfId() {
 		return destIfId;
 	}
-	public void setDestIfId(int destIfId) {
+	public void setDestIfId(long destIfId) {
 		this.destIfId = destIfId;
 	}
 }

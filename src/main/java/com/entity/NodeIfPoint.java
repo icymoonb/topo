@@ -6,7 +6,7 @@ import com.pojo.Node;
 
 public class NodeIfPoint {
 	Node srcNode = null;
-	ArrayList<Point> ifPoints = null;
+	ArrayList<Point> ifPoints = new ArrayList<Point>();
 	public Node getSrcNode() {
 		return srcNode;
 	}

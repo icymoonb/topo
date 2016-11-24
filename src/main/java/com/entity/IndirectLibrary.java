@@ -3,8 +3,8 @@ package com.entity;
 import java.util.ArrayList;
 
 public class IndirectLibrary {
-	ArrayList<Indirect> indirects;
-	ArrayList<NodeIfIndirect> nodeIfIndirects;
+	ArrayList<Indirect> indirects = new ArrayList<Indirect>();
+	ArrayList<NodeIfIndirect> nodeIfIndirects = new ArrayList<NodeIfIndirect>();
 	public ArrayList<Indirect> getIndirects() {
 		return indirects;
 	}

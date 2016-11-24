@@ -13,7 +13,7 @@ public interface TopoCommonMapper {
 	 * 读取AFT信息
 	 * @return List<RoutePointData>
 	 */
-	List<RoutePointData> GetRoutePoint();
+	List<RoutePointData> getRoutePoint();
 	
 	/**
 	 * 获取完全匹配的CDP记录。
@@ -23,7 +23,7 @@ public interface TopoCommonMapper {
 	 *  3.cdp_cache与interface d进行匹配目标端口，要求d节点为c的节点，且d的端口名称或端口说明与cdp_cache.remote_ifname相等
 	 * @return List<PointData>
 	 */
-	List<PointData> GetFullCDPPoint();
+	List<PointData> getFullCDPPoint();
 	
 	/**
 	 * 获取单方面匹配的CDP记录。
@@ -32,7 +32,7 @@ public interface TopoCommonMapper {
 	 *  3.cdp_cache与interface d进行过滤匹配，要求过滤可以匹配到端口名称或端口说明相符的记录。避免与GetFullCDPPoint获取出同样的记录
 	 * @return List<PointData>
 	 */
-	List<PointData> GetSigleCDPPoint();
+	List<PointData> getSingleCDPPoint();
 	
 	/**
 	 * 获取完全匹配的STP记录
@@ -41,7 +41,7 @@ public interface TopoCommonMapper {
 	 *	3.bridge_stp_port a与bridge_port_table d进行目标端口比较，得到目标节点的Interface e信息
 	 * @return List<RoutePointData>
 	 */
-	List<RoutePointData> GetFullSTPPoint();
+	List<RoutePointData> getFullSTPPoint();
 	
 	/**
 	 * 	获取单向STP记录
@@ -50,14 +50,10 @@ public interface TopoCommonMapper {
 	 *  3.无法通过bridge_port_table，定位到目标节点的stp线路信息
 	 * @return List<RoutePointData>
 	 */
-	List<RoutePointData> GetSingleSTPPoint();
+	List<RoutePointData> getSingleSTPPoint();
 	
-	/**
-	 * 	获取完整的转发表记录
-	 * 	1.bridge_fdb a与interface b进行匹配，得到源节点与源Interface
-	 * 	2.bridge_fdb a与interface c进行目标MAC地址比较，得到目标节点，但目标端口不可信
-	*/
-//	void GetVirtualAFTPoint(); 缺少virtual_interface
+//	void getVirtualAFTPoint(); 缺少virtual_interface
+//	void getPhysAFTPoint(); 缺少virtual_interface
 	
 	/**
 	 * 	获取single的转发表记录
@@ -65,12 +61,12 @@ public interface TopoCommonMapper {
 	 * 	2.bridge_fdb a与interface c进行目标MAC地址匹配过滤，避免得到完整的转发表记录与GetFullAFTPoint重复
 	 * @return List<SingleAFTPointData>
 	 */
-	List<SingleAFTPointData> GetSingleAFTPoint();
+	List<SingleAFTPointData> getSingleAFTPoint();
 	
 	/**
 	 * 隐藏线路将被视同手工线路 
 	 * line where type = 3 or is_hide = 1
 	 * @return List<ManualPointData>
 	 */
-	List<ManualPointData> GetManualPoint();
+	List<ManualPointData> getManualPoint();
 }

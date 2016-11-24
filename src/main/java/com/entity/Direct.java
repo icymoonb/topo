@@ -2,7 +2,11 @@ package com.entity;
 
 import com.pojo.Interface;
 import com.pojo.Node;
-
+/**
+ * 方向，记录两个节点的链接关系
+ * @author chenbo
+ *
+ */
 public class Direct {
 	Node node1 = null;
 	Interface if1 = null;

@@ -393,4 +393,12 @@ public class Node implements Serializable {
     public void setType2(Long type2) {
         this.type2 = type2;
     }
+    
+	public boolean nodeEquals(Node localNode) {
+		if (this.nodeId != 0 || localNode.getNodeId() != 0) {
+			return this.nodeId == localNode.getNodeId();
+		} else {
+			return this.bridgeAddress.equals(localNode.getBridgeAddress());
+		}
+	}
 }

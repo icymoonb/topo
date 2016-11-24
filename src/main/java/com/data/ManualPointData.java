@@ -1,33 +1,32 @@
 package com.data;
 
 public class ManualPointData {
-	private int uplink_node_id;
-	private int uplink_if_id;
-	private int node_id;
-	private int if_id;
-	
-	public int getUplink_node_id() {
-		return uplink_node_id;
+	private long uplinkNodeId;
+	private long uplinkIfId;
+	private long nodeId;
+	private long ifId;
+	public long getUplinkNodeId() {
+		return uplinkNodeId;
 	}
-	public void setUplink_node_id(int uplink_node_id) {
-		this.uplink_node_id = uplink_node_id;
+	public void setUplinkNodeId(long uplinkNodeId) {
+		this.uplinkNodeId = uplinkNodeId;
 	}
-	public int getUplink_if_id() {
-		return uplink_if_id;
+	public long getUplinkIfId() {
+		return uplinkIfId;
 	}
-	public void setUplink_if_id(int uplink_if_id) {
-		this.uplink_if_id = uplink_if_id;
+	public void setUplinkIfId(long uplinkIfId) {
+		this.uplinkIfId = uplinkIfId;
 	}
-	public int getNode_id() {
-		return node_id;
+	public long getNodeId() {
+		return nodeId;
 	}
-	public void setNode_id(int node_id) {
-		this.node_id = node_id;
+	public void setNodeId(long nodeId) {
+		this.nodeId = nodeId;
 	}
-	public int getIf_id() {
-		return if_id;
+	public long getIfId() {
+		return ifId;
 	}
-	public void setIf_id(int if_id) {
-		this.if_id = if_id;
+	public void setIfId(long ifId) {
+		this.ifId = ifId;
 	}
 }

@@ -1,47 +1,47 @@
 package com.data;
 
 public class RoutePointData {
-	private int srcNodeId;
-	private int srcIfIndex;
-	private int srcIfId;
-	private int destNodeId;
-	private int destIfIndex;
-	private int destIfId;
+	private long srcNodeId;
+	private long srcIfIndex;
+	private long srcIfId;
+	private long destNodeId;
+	private long destIfIndex;
+	private long destIfId;
 	
-	public int getSrcNodeId() {
+	public long getSrcNodeId() {
 		return srcNodeId;
 	}
-	public void setSrcNodeId(int srcNodeId) {
+	public void setSrcNodeId(long srcNodeId) {
 		this.srcNodeId = srcNodeId;
 	}
-	public int getSrcIfIndex() {
+	public long getSrcIfIndex() {
 		return srcIfIndex;
 	}
-	public void setSrcIfIndex(int srcIfIndex) {
+	public void setSrcIfIndex(long srcIfIndex) {
 		this.srcIfIndex = srcIfIndex;
 	}
-	public int getSrcIfId() {
+	public long getSrcIfId() {
 		return srcIfId;
 	}
-	public void setSrcIfId(int srcIfId) {
+	public void setSrcIfId(long srcIfId) {
 		this.srcIfId = srcIfId;
 	}
-	public int getDestNodeId() {
+	public long getDestNodeId() {
 		return destNodeId;
 	}
-	public void setDestNodeId(int destNodeId) {
+	public void setDestNodeId(long destNodeId) {
 		this.destNodeId = destNodeId;
 	}
-	public int getDestIfIndex() {
+	public long getDestIfIndex() {
 		return destIfIndex;
 	}
-	public void setDestIfIndex(int destIfIndex) {
+	public void setDestIfIndex(long destIfIndex) {
 		this.destIfIndex = destIfIndex;
 	}
-	public int getDestIfId() {
+	public long getDestIfId() {
 		return destIfId;
 	}
-	public void setDestIfId(int destIfId) {
+	public void setDestIfId(long destIfId) {
 		this.destIfId = destIfId;
 	}
 	

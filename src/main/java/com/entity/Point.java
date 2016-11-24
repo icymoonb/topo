@@ -8,7 +8,7 @@ public class Point {
 	Interface srcIf = null;
 	Node destNode = null;
 	Interface destIf = null;
-	PointReliably reliably = null;
+	int reliably;
 	public Node getSrcNode() {
 		return srcNode;
 	}
@@ -33,11 +33,11 @@ public class Point {
 	public void setDestIf(Interface destIf) {
 		this.destIf = destIf;
 	}
-	public PointReliably getReliably() {
+	public int getReliably() {
 		return reliably;
 	}
-	public void setReliably(PointReliably reliably) {
-		this.reliably = reliably;
+	public void setReliably(int pR_Point) {
+		this.reliably = pR_Point;
 	}
 	
 }
